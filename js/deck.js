@@ -180,8 +180,8 @@
       type: "doughnut",
       data: { labels, datasets: [{ data: vals, backgroundColor: pal, borderColor: "#12241a", borderWidth: 3 }] },
       options: {
-        cutout: "58%", responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: "right", labels: { color: "#e3eedd", boxWidth: 12, padding: 12 } } }
+        cutout: "62%", responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: "right", labels: { color: "#eef7e8", boxWidth: 15, padding: 16, font: { size: 15, weight: "600" } } } }
       }
     });
     const max = Math.max.apply(null, vals);
@@ -191,7 +191,7 @@
       options: {
         responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: { r: { suggestedMin: 0, suggestedMax: Math.ceil(max * 1.15), grid: { color: GRID }, angleLines: { color: GRID }, pointLabels: { color: "#e3eedd", font: { size: 11 } }, ticks: { display: false } } }
+        scales: { r: { suggestedMin: 0, suggestedMax: Math.ceil(max * 1.15), grid: { color: GRID }, angleLines: { color: GRID }, pointLabels: { color: "#eef7e8", font: { size: 15, weight: "600" } }, ticks: { display: false } } }
       }
     });
   }
@@ -223,9 +223,9 @@
     chart("cPrejudice", {
       type: "polarArea",
       data: { labels: ["오해", "편견", "선입견·단정", "판단·비난", "이해의 오만"],
-        datasets: [{ data: [26, 10, 14, 9, 8], backgroundColor: ["rgba(154,212,111,.78)", "rgba(244,207,107,.78)", "rgba(94,161,83,.72)", "rgba(79,143,106,.72)", "rgba(201,162,74,.72)"], borderColor: "#12241a", borderWidth: 2 }] },
-      options: { responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: "bottom", labels: { color: "#e3eedd", boxWidth: 12 } } },
+        datasets: [{ data: [26, 10, 14, 9, 8], backgroundColor: ["#9ad46f", "#f4cf6b", "#4f9a5e", "#2f7d55", "#d19a3a"], borderColor: "#08110b", borderWidth: 3 }] },
+      options: { responsive: true, maintainAspectRatio: false, layout: { padding: 4 },
+        plugins: { legend: { position: "bottom", labels: { color: "#ffffff", boxWidth: 16, padding: 16, font: { size: 16, weight: "700" } } } },
         scales: { r: { grid: { color: GRID }, ticks: { display: false }, angleLines: { color: GRID } } } }
     });
   }

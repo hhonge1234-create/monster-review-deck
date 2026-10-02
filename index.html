@@ -127,9 +127,9 @@
     style="background-image:url('assets/img/moss.jpg')">
     <div class="kicker">Theme Distribution</div>
     <h2>리뷰 테마 분포</h2>
-    <div class="cols tight" style="align-items:center; flex:1">
-      <div class="chart-wrap"><canvas id="cThemes"></canvas></div>
-      <div class="chart-wrap"><canvas id="cRadar"></canvas></div>
+    <div class="cols tight" style="align-items:stretch; flex:1">
+      <div class="chart-card"><div class="chart-wrap"><canvas id="cThemes"></canvas></div></div>
+      <div class="chart-card"><div class="chart-wrap"><canvas id="cRadar"></canvas></div></div>
     </div>
     <p class="footer-note">※ 테마별 ‘관련 키워드 포함 리뷰 수’(중복 포함) 기준</p>
   </section>
@@ -154,9 +154,9 @@
     style="background-image:url('assets/img/canopy.jpg')">
     <div class="kicker">Theme 02 · Gaze</div>
     <h2>오해와 편견 — 모두를 괴물로</h2>
-    <div class="cols tight" style="align-items:center; flex:1">
-      <div class="chart-wrap"><canvas id="cPrejudice"></canvas></div>
-      <div class="frame"><img src="assets/charts/theme_heatmap.png" alt="테마 동시 언급 히트맵" /></div>
+    <div class="cols tight" style="align-items:stretch; flex:1; grid-template-columns:0.92fr 1.08fr">
+      <div class="chart-card"><div class="chart-wrap"><canvas id="cPrejudice"></canvas></div></div>
+      <div class="frame big"><img src="assets/charts/theme_heatmap.png" alt="테마 동시 언급 히트맵" /></div>
     </div>
     <p class="quote" style="margin-top:2vh; font-size:clamp(15px,1.5vw,22px)">“누군가를 함부로 이해한다는 게 얼마나 <span class="hl">오만하고 잔인한</span> 것인지.”</p>
   </section>
