@@ -249,17 +249,17 @@ window.REVIEW_STATS = {
     {
       "stage": "슬픔·눈물",
       "value": 24,
-      "color": "#2F6F8F"
+      "color": "#5EA153"
     },
     {
       "stage": "성찰·오해",
       "value": 66,
-      "color": "#5BC0EB"
+      "color": "#9AD46F"
     },
     {
       "stage": "위로·행복",
       "value": 45,
-      "color": "#F4B942"
+      "color": "#F4CF6B"
     }
   ],
   "source": "watcha.com/ko/contents/mOopwPa"

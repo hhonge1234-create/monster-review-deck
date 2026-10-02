@@ -73,39 +73,44 @@
     else document.exitFullscreen?.();
   }
 
-  /* ---------------- rain particle canvas ---------------- */
-  const rain = document.getElementById("rain");
-  if (rain) {
-    const ctx = rain.getContext("2d");
-    let W, H, drops, storm = 0.35, target = 0.35;
+  /* ---------------- forest light / pollen canvas ---------------- */
+  const sky = document.getElementById("rain");
+  if (sky) {
+    const ctx = sky.getContext("2d");
+    let W, H, motes, glow = 0.7, target = 0.7;
     function resize() {
-      W = rain.width = window.innerWidth;
-      H = rain.height = window.innerHeight;
-      const count = Math.round(W / 9);
-      drops = Array.from({ length: count }, () => ({
+      W = sky.width = window.innerWidth;
+      H = sky.height = window.innerHeight;
+      const count = Math.min(160, Math.round((W * H) / 38000));
+      motes = Array.from({ length: count }, () => ({
         x: Math.random() * W, y: Math.random() * H,
-        l: 8 + Math.random() * 22, s: 2 + Math.random() * 4, a: 0.05 + Math.random() * 0.18
+        r: 0.8 + Math.random() * 3.2,
+        vx: (Math.random() - 0.5) * 0.26,
+        vy: -(0.1 + Math.random() * 0.5),
+        a: 0.14 + Math.random() * 0.5,
+        h: Math.random() < 0.55 ? 86 : 44
       }));
     }
     resize();
     window.addEventListener("resize", resize);
     (function loop() {
-      storm += (target - storm) * 0.04;
+      glow += (target - glow) * 0.05;
       ctx.clearRect(0, 0, W, H);
-      for (const d of drops) {
-        ctx.strokeStyle = "rgba(150,190,225," + (d.a * storm * 1.6) + ")";
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(d.x, d.y);
-        ctx.lineTo(d.x - d.l * 0.22, d.y + d.l);
-        ctx.stroke();
-        d.y += d.s * (0.5 + storm * 1.4);
-        d.x -= d.s * 0.12;
-        if (d.y > H) { d.y = -20; d.x = Math.random() * W; }
+      for (const m of motes) {
+        const g = ctx.createRadialGradient(m.x, m.y, 0, m.x, m.y, m.r * 5);
+        g.addColorStop(0, "hsla(" + m.h + ",72%,74%," + (m.a * glow) + ")");
+        g.addColorStop(1, "hsla(" + m.h + ",72%,74%,0)");
+        ctx.fillStyle = g;
+        ctx.beginPath(); ctx.arc(m.x, m.y, m.r * 5, 0, Math.PI * 2); ctx.fill();
+        ctx.fillStyle = "hsla(" + m.h + ",85%,88%," + (m.a * glow * 0.9) + ")";
+        ctx.beginPath(); ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2); ctx.fill();
+        m.x += m.vx; m.y += m.vy;
+        if (m.y < -12) { m.y = H + 12; m.x = Math.random() * W; }
+        if (m.x < -12) m.x = W + 12; else if (m.x > W + 12) m.x = -12;
       }
       requestAnimationFrame(loop);
     })();
-    window.setStorm = (v) => { target = v; };
+    window.setGlow = (v) => { target = v; };
   }
 
   /* ---------------- helpers ---------------- */
@@ -132,8 +137,8 @@
   }
 
   /* ---------------- Chart.js factory ---------------- */
-  const GRID = "rgba(255,255,255,0.06)";
-  const TICK = "#8a94a6";
+  const GRID = "rgba(255,255,255,0.08)";
+  const TICK = "#a9c0ab";
   function chart(id, cfg) {
     if (!window.Chart) return null;
     const el = document.getElementById(id);
@@ -153,14 +158,14 @@
       data: {
         labels: words.map((w) => w[0]),
         datasets: [{ data: words.map((w) => w[1]), backgroundColor: words.map((_, i) =>
-          `rgba(${90 + i * 11},${140 - i * 4},${210 - i * 6},0.85)`), borderRadius: 6, barPercentage: 0.72 }]
+          `hsla(${96 - i * 3},58%,${64 - i * 1.2}%,0.9)`), borderRadius: 6, barPercentage: 0.72 }]
       },
       options: {
         indexAxis: "y", responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
           x: { grid: { color: GRID }, ticks: { color: TICK } },
-          y: { grid: { display: false }, ticks: { color: "#d6dce6", font: { size: 13, weight: "600" } } }
+          y: { grid: { display: false }, ticks: { color: "#e3eedd", font: { size: 13, weight: "600" } } }
         }
       }
     });
@@ -170,23 +175,23 @@
     const th = (S.themes || []).slice(0, 8);
     const labels = th.map((t) => t.name);
     const vals = th.map((t) => t.count);
-    const pal = ["#f4b942", "#ffd166", "#5bc0eb", "#2f6f8f", "#7bd88f", "#b995f2", "#e88", "#8ad"];
+    const pal = ["#f4cf6b", "#ffe3a8", "#9ad46f", "#5ea153", "#4f8f6a", "#c9a24a", "#8fc06a", "#e0b968"];
     chart("cThemes", {
       type: "doughnut",
-      data: { labels, datasets: [{ data: vals, backgroundColor: pal, borderColor: "#0b0e14", borderWidth: 3 }] },
+      data: { labels, datasets: [{ data: vals, backgroundColor: pal, borderColor: "#12241a", borderWidth: 3 }] },
       options: {
         cutout: "58%", responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: "right", labels: { color: "#d6dce6", boxWidth: 12, padding: 12 } } }
+        plugins: { legend: { position: "right", labels: { color: "#e3eedd", boxWidth: 12, padding: 12 } } }
       }
     });
     const max = Math.max.apply(null, vals);
     chart("cRadar", {
       type: "radar",
-      data: { labels, datasets: [{ data: vals, borderColor: "#5bc0eb", backgroundColor: "rgba(91,192,235,0.22)", pointBackgroundColor: "#f4b942", borderWidth: 2 }] },
+      data: { labels, datasets: [{ data: vals, borderColor: "#9ad46f", backgroundColor: "rgba(154,212,111,0.22)", pointBackgroundColor: "#f4cf6b", borderWidth: 2 }] },
       options: {
         responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: { r: { suggestedMin: 0, suggestedMax: Math.ceil(max * 1.15), grid: { color: GRID }, angleLines: { color: GRID }, pointLabels: { color: "#d6dce6", font: { size: 11 } }, ticks: { display: false } } }
+        scales: { r: { suggestedMin: 0, suggestedMax: Math.ceil(max * 1.15), grid: { color: GRID }, angleLines: { color: GRID }, pointLabels: { color: "#e3eedd", font: { size: 11 } }, ticks: { display: false } } }
       }
     });
   }
@@ -199,7 +204,7 @@
       options: {
         responsive: true, maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: { x: { grid: { display: false }, ticks: { color: "#d6dce6", font: { size: 14, weight: "600" } } }, y: { grid: { color: GRID }, ticks: { color: TICK } } }
+        scales: { x: { grid: { display: false }, ticks: { color: "#e3eedd", font: { size: 14, weight: "600" } } }, y: { grid: { color: GRID }, ticks: { color: TICK } } }
       }
     });
   }
@@ -208,9 +213,9 @@
     const d = S.lengthDist || { labels: [], values: [] };
     chart("cLength", {
       type: "bar",
-      data: { labels: d.labels, datasets: [{ data: d.values, backgroundColor: ["#2f6f8f", "#5bc0eb", "#3e8fb0", "#f4b942", "#ffd166"], borderRadius: 8, barPercentage: 0.62 }] },
+      data: { labels: d.labels, datasets: [{ data: d.values, backgroundColor: ["#3f7a4f", "#5ea153", "#9ad46f", "#f4cf6b", "#ffe3a8"], borderRadius: 8, barPercentage: 0.62 }] },
       options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } },
-        scales: { x: { grid: { display: false }, ticks: { color: "#d6dce6" } }, y: { grid: { color: GRID }, ticks: { color: TICK } } } }
+        scales: { x: { grid: { display: false }, ticks: { color: "#e3eedd" } }, y: { grid: { color: GRID }, ticks: { color: TICK } } } }
     });
   }
 
@@ -218,9 +223,9 @@
     chart("cPrejudice", {
       type: "polarArea",
       data: { labels: ["오해", "편견", "선입견·단정", "판단·비난", "이해의 오만"],
-        datasets: [{ data: [26, 10, 14, 9, 8], backgroundColor: ["rgba(91,192,235,.7)", "rgba(244,185,66,.7)", "rgba(123,216,143,.6)", "rgba(185,149,242,.6)", "rgba(232,136,136,.6)"], borderColor: "#0b0e14", borderWidth: 2 }] },
+        datasets: [{ data: [26, 10, 14, 9, 8], backgroundColor: ["rgba(154,212,111,.78)", "rgba(244,207,107,.78)", "rgba(94,161,83,.72)", "rgba(79,143,106,.72)", "rgba(201,162,74,.72)"], borderColor: "#12241a", borderWidth: 2 }] },
       options: { responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: "bottom", labels: { color: "#d6dce6", boxWidth: 12 } } },
+        plugins: { legend: { position: "bottom", labels: { color: "#e3eedd", boxWidth: 12 } } },
         scales: { r: { grid: { color: GRID }, ticks: { display: false }, angleLines: { color: GRID } } } }
     });
   }
@@ -241,7 +246,7 @@
       r.setAttribute("width", (W / n - 3).toString());
       r.setAttribute("rx", "2");
       r.setAttribute("height", h.toString());
-      r.setAttribute("fill", i % 3 === 0 ? "#f4b942" : "#5bc0eb");
+      r.setAttribute("fill", i % 3 === 0 ? "#f4cf6b" : "#9ad46f");
       r.setAttribute("opacity", "0.85");
       svg.appendChild(r);
       bars.push({ el: r, h });
@@ -275,8 +280,8 @@
     reveal(s.querySelectorAll(".stat-card, .pipe-node, .panel3, .crit .c, .quotelist .q"),
       { stagger: 90, d: 700 });
 
-    if (window.setStorm) {
-      window.setStorm(name === "title" ? 0.95 : name === "sun" ? 0.08 : name === "sound" ? 0.55 : 0.3);
+    if (window.setGlow) {
+      window.setGlow(name === "title" ? 0.55 : (name === "sun" || name === "conclusion") ? 1.0 : name === "sound" ? 0.6 : 0.72);
     }
 
     if (name === "title") {

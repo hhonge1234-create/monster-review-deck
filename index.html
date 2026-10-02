@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>《괴물》 리뷰 데이터 분석 — Slide Deck</title>
 <meta name="description" content="고레에다 히로카즈 《괴물》 왓챠 리뷰 477건 데이터 분석 프레젠테이션" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230b0e14'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23f4b942' font-family='sans-serif'%3E%E6%80%AA%3C/text%3E%3C/svg%3E" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312241a'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23f4cf6b' font-family='sans-serif'%3E%E6%80%AA%3C/text%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;800&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet" />
@@ -17,7 +17,7 @@
 
   <!-- 1. TITLE -->
   <section class="slide bg-full title-slide" data-name="title"
-    style="background-image:url('assets/img/title.jpg')">
+    style="background-image:url('assets/film/train.jpg')">
     <div class="kicker">Review Data Analysis · 2026</div>
     <h1 class="film-title serif">
       <span class="ch">괴</span><span class="ch">물</span>
@@ -29,12 +29,13 @@
       <span class="chip">4점 이상 77.7%</span>
       <span class="chip">Firecrawl 크롤링</span>
     </div>
+    <img class="poster" src="assets/film/poster.png" alt="《괴물》 공식 포스터" />
     <div class="scroll-hint"><span class="dot"></span>→ / SPACE 로 이동</div>
   </section>
 
   <!-- 2. OVERVIEW -->
   <section class="slide" data-name="overview"
-    style="background-image:url('assets/img/texture.jpg')">
+    style="background-image:url('assets/img/moss.jpg')">
     <div class="kicker">Overview</div>
     <h2>작품 &amp; 데이터 개요</h2>
     <p class="lead" style="max-width:70ch">
@@ -54,7 +55,7 @@
 
   <!-- 3. PIPELINE -->
   <section class="slide" data-name="pipeline"
-    style="background-image:url('assets/img/texture.jpg')">
+    style="background-image:url('assets/img/forest.jpg')">
     <div class="kicker">Method</div>
     <h2>어떻게 분석했나</h2>
     <p class="lead">Firecrawl로 렌더링·스크롤 수집 → 파싱 → 통계 → 시각화.</p>
@@ -80,7 +81,7 @@
 
   <!-- 4. QUESTION / WORDCLOUD -->
   <section class="slide cols" data-name="question"
-    style="background-image:url('assets/img/gaze.jpg')">
+    style="background-image:url('assets/img/canopy.jpg')">
     <div>
       <div class="kicker">Core Question</div>
       <h2 class="serif" style="font-size:clamp(30px,3.6vw,62px)">“괴물은<br />누구인가?”</h2>
@@ -96,7 +97,7 @@
 
   <!-- 5. KEYWORDS -->
   <section class="slide" data-name="keywords"
-    style="background-image:url('assets/img/texture.jpg')">
+    style="background-image:url('assets/img/meadow.jpg')">
     <div class="kicker">Keyword Frequency</div>
     <h2>최다 등장 키워드</h2>
     <div class="chart-wrap tall"><canvas id="cKeywords"></canvas></div>
@@ -104,7 +105,7 @@
 
   <!-- 6. QUOTES -->
   <section class="slide" data-name="quotes"
-    style="background-image:url('assets/img/viewpoint.jpg')">
+    style="background-image:url('assets/film/field_run_clean.jpg')">
     <div class="kicker">Most Quoted</div>
     <h2>가장 많이 인용된 대사 · 감상</h2>
     <div class="cols tight" style="align-items:start">
@@ -123,7 +124,7 @@
 
   <!-- 7. THEMES -->
   <section class="slide" data-name="themes"
-    style="background-image:url('assets/img/texture.jpg')">
+    style="background-image:url('assets/img/moss.jpg')">
     <div class="kicker">Theme Distribution</div>
     <h2>리뷰 테마 분포</h2>
     <div class="cols tight" style="align-items:center; flex:1">
@@ -135,7 +136,7 @@
 
   <!-- 8. VIEWPOINT -->
   <section class="slide" data-name="viewpoint"
-    style="background-image:url('assets/img/viewpoint.jpg')">
+    style="background-image:url('assets/img/forest.jpg')">
     <div class="kicker">Theme 01 · Structure</div>
     <h2>다층적 시점 — “컬러 라쇼몽”</h2>
     <p class="lead">같은 사건을 <b>엄마 → 담임 → 아이들</b>의 눈으로 세 번 반복하며,
@@ -150,7 +151,7 @@
 
   <!-- 9. PREJUDICE -->
   <section class="slide" data-name="prejudice"
-    style="background-image:url('assets/img/gaze.jpg')">
+    style="background-image:url('assets/img/canopy.jpg')">
     <div class="kicker">Theme 02 · Gaze</div>
     <h2>오해와 편견 — 모두를 괴물로</h2>
     <div class="cols tight" style="align-items:center; flex:1">
@@ -162,7 +163,7 @@
 
   <!-- 10. SUN / ENDING -->
   <section class="slide bg-full conclusion" data-name="sun"
-    style="background-image:url('assets/img/sunlight.jpg')">
+    style="background-image:url('assets/img/sunforest.jpg')">
     <div class="kicker">Theme 03 · Ending</div>
     <div class="bigline serif">“다시 태어나지 않아도<br />괜찮아.”</div>
     <p class="lead" style="max-width:62ch; margin-top:3vh">
@@ -173,7 +174,7 @@
 
   <!-- 11. SOUND -->
   <section class="slide" data-name="sound"
-    style="background-image:url('assets/img/aqua.jpg')">
+    style="background-image:url('assets/img/water.jpg')">
     <div class="kicker">Theme 04 · Sound &amp; Image</div>
     <h2>사운드 &amp; 영상미 — <span class="accent">Aqua</span></h2>
     <div class="cols tight" style="align-items:center; flex:1">
@@ -191,7 +192,7 @@
 
   <!-- 12. SENTIMENT -->
   <section class="slide" data-name="sentiment"
-    style="background-image:url('assets/img/texture.jpg')">
+    style="background-image:url('assets/img/meadow.jpg')">
     <div class="kicker">Emotional Arc</div>
     <h2>감정 반응 흐름 — 슬픔 → 성찰 → 위로</h2>
     <div class="cols tight" style="align-items:center; flex:1">
@@ -203,7 +204,7 @@
 
   <!-- 13. CRITIQUE -->
   <section class="slide" data-name="critique"
-    style="background-image:url('assets/img/texture.jpg')">
+    style="background-image:url('assets/img/sunforest.jpg')">
     <div class="kicker">Minority View</div>
     <h2>비판적·유보적 시각 (약 22%)</h2>
     <div class="crit">
@@ -216,7 +217,7 @@
 
   <!-- 14. CONCLUSION -->
   <section class="slide bg-full conclusion" data-name="conclusion"
-    style="background-image:url('assets/img/sunlight.jpg')">
+    style="background-image:url('assets/film/train.jpg')">
     <div class="kicker">Conclusion</div>
     <div class="bigline">괴물은 타인이 아니라<br /><span class="accent">우리가 만들어내는 시선</span>이다.</div>
     <p class="lead" style="max-width:66ch; margin-top:3vh">
