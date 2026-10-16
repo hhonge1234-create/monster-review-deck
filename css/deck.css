@@ -165,6 +165,20 @@ h1, h2, h3, .kicker, .lead, .quote, .bigline, .stat-card .label { text-shadow: 0
 .crit .c .h { font-weight: 700; color: var(--sun); margin-bottom: .8vh; font-size: clamp(14px, 1.3vw, 20px); }
 .crit .c .b { color: #cbd3df; line-height: 1.6; font-size: clamp(12px, 1.1vw, 17px); }
 
+/* report analysis callout */
+.analysis {
+  margin-top: 2.4vh; padding: 1.5vh 1.6vw;
+  border-left: 4px solid var(--sun);
+  background: rgba(8,17,11,0.72);
+  border-radius: 0 14px 14px 0; max-width: 94ch;
+  line-height: 1.65; font-size: clamp(13px, 1.15vw, 18px); color: #dbe7dc;
+}
+.analysis .tagline {
+  display: block; margin-bottom: .5vh; color: var(--sun);
+  font-weight: 800; letter-spacing: .2em; font-size: 11px; text-transform: uppercase;
+}
+.analysis b { color: var(--rain); }
+
 /* conclusion */
 .conclusion { justify-content: center; align-items: center; text-align: center; }
 .conclusion .bigline { font-size: clamp(28px, 4.4vw, 74px); font-weight: 800; line-height: 1.18; letter-spacing: -0.02em; }
