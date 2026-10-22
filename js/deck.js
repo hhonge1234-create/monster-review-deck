@@ -4,6 +4,8 @@
   const S = window.REVIEW_STATS || {};
   const slides = Array.from(document.querySelectorAll(".slide"));
   const total = slides.length;
+  const STATIC = /[#&?]static/.test(location.hash);
+  if (STATIC) document.body.classList.add("static");
   let cur = 0;
   let busy = false;
   const charts = {};
@@ -116,7 +118,12 @@
   /* ---------------- helpers ---------------- */
   const A = window.anime;
   function reveal(el, opts) {
-    if (!el || !A) return;
+    if (!el) return;
+    if (STATIC) {
+      el.forEach((x) => { x.style.opacity = 1; x.style.transform = "none"; });
+      return;
+    }
+    if (!A) return;
     A({
       targets: el,
       opacity: [0, 1],
@@ -127,9 +134,14 @@
     });
   }
   function countUp(el, to, opts) {
-    if (!el || !A) return;
+    if (!el) return;
     const dec = (opts && opts.dec) || 0;
     const suffix = el.dataset.suffix || "";
+    if (STATIC) {
+      el.textContent = (dec ? Number(to).toFixed(dec) : Math.round(to).toLocaleString()) + suffix;
+      return;
+    }
+    if (!A) return;
     const o = { v: 0 };
     el.textContent = "0" + suffix;
     A({ targets: o, v: to, round: dec ? null : 1, duration: 1500, easing: "easeOutExpo",
@@ -145,7 +157,7 @@
     if (!el) return null;
     if (charts[id]) { charts[id].destroy(); }
     cfg.options = cfg.options || {};
-    cfg.options.animation = { duration: 1400, easing: "easeOutQuart" };
+    cfg.options.animation = STATIC ? false : { duration: 1400, easing: "easeOutQuart" };
     cfg.options.color = TICK;
     charts[id] = new Chart(el.getContext("2d"), cfg);
     return charts[id];
@@ -220,13 +232,25 @@
   }
 
   function initPrejudice() {
+    const labels = ["오해", "선입견·단정", "편견", "판단·비난", "이해의 오만"];
+    const vals = [26, 14, 10, 9, 8];
     chart("cPrejudice", {
-      type: "polarArea",
-      data: { labels: ["오해", "편견", "선입견·단정", "판단·비난", "이해의 오만"],
-        datasets: [{ data: [26, 10, 14, 9, 8], backgroundColor: ["#9ad46f", "#f4cf6b", "#4f9a5e", "#2f7d55", "#d19a3a"], borderColor: "#08110b", borderWidth: 3 }] },
-      options: { responsive: true, maintainAspectRatio: false, layout: { padding: 4 },
-        plugins: { legend: { position: "bottom", labels: { color: "#ffffff", boxWidth: 16, padding: 16, font: { size: 16, weight: "700" } } } },
-        scales: { r: { grid: { color: GRID }, ticks: { display: false }, angleLines: { color: GRID } } } }
+      type: "bar",
+      data: { labels, datasets: [{ data: vals,
+        backgroundColor: ["#9ad46f", "#7cc45f", "#f4cf6b", "#d8a23f", "#b98a35"],
+        borderRadius: 8, barPercentage: 0.66 }] },
+      options: {
+        indexAxis: "y", responsive: true, maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (c) => c.parsed.x + "건" } }
+        },
+        scales: {
+          x: { grid: { color: GRID }, ticks: { color: TICK, font: { size: 13 } },
+               title: { display: true, text: "언급 리뷰 수", color: TICK, font: { size: 13 } } },
+          y: { grid: { display: false }, ticks: { color: "#eef7e8", font: { size: 16, weight: "700" } } }
+        }
+      }
     });
   }
 
@@ -252,7 +276,7 @@
       bars.push({ el: r, h });
     }
     if (A) {
-      A({ targets: bars.map((b) => b.el), scaleY: [0.05, 1], opacity: [0.2, 0.9], transformOrigin: "center",
+      if (!STATIC) A({ targets: bars.map((b) => b.el), scaleY: [0.05, 1], opacity: [0.2, 0.9], transformOrigin: "center",
         duration: 900, delay: A.stagger(14), easing: "easeOutQuart" });
       let t = 0;
       setInterval(() => {
@@ -274,10 +298,10 @@
     const first = !entered.has(n);
 
     // generic reveals
-    reveal(s.querySelectorAll(".kicker, h1, h2, .lead, .quote, .quote-src, .footer-note, .scroll-hint"),
+    reveal(s.querySelectorAll(".kicker, h1, h2, .lead, .title-thesis, .subhead, .quote, .quote-src, .footer-note, .scroll-hint"),
       { stagger: 90, d: 700, y: 24 });
     reveal(s.querySelectorAll(".chip"), { stagger: 60, d: 600 });
-    reveal(s.querySelectorAll(".stat-card, .pipe-node, .panel3, .crit .c, .quotelist .q"),
+    reveal(s.querySelectorAll(".stat-card, .pipe-node, .panel3, .crit .c, .quotelist .q, .tc, .crit-hero, .crit-list .row, .explain, .analysis"),
       { stagger: 90, d: 700 });
 
     if (window.setGlow) {
@@ -286,7 +310,8 @@
 
     if (name === "title") {
       const chars = s.querySelectorAll(".film-title .ch");
-      if (A) A({ targets: chars, opacity: [0, 1], translateY: [90, 0], rotate: [8, 0],
+      if (STATIC) { chars.forEach((c) => { c.style.opacity = 1; c.style.transform = "none"; }); }
+      else if (A) A({ targets: chars, opacity: [0, 1], translateY: [90, 0], rotate: [8, 0],
         duration: 1000, delay: A.stagger(90, { start: 200 }), easing: "easeOutExpo" });
     }
 
@@ -306,14 +331,15 @@
 
     if (name === "viewpoint") {
       const p = s.querySelectorAll(".panel3");
-      if (A) A({ targets: p, opacity: [0, 1], translateX: (el, i) => [120 - i * 40, 0], rotateY: [18, 0],
+      if (STATIC) p.forEach((x) => { x.style.opacity = 1; x.style.transform = "none"; });
+      else if (A) A({ targets: p, opacity: [0, 1], translateX: (el, i) => [120 - i * 40, 0], rotateY: [18, 0],
         duration: 900, delay: A.stagger(160), easing: "easeOutCubic" });
     }
 
     if (name === "sun") {
-      // de-rain handled by setStorm; animate the big line
       const hl = s.querySelector(".bigline");
-      if (hl && A) A({ targets: hl, opacity: [0, 1], scale: [0.96, 1], duration: 1200, easing: "easeOutExpo" });
+      if (STATIC && hl) { hl.style.opacity = 1; hl.style.transform = "none"; }
+      else if (hl && A) A({ targets: hl, opacity: [0, 1], scale: [0.96, 1], duration: 1200, easing: "easeOutExpo" });
     }
 
     entered.add(n);
@@ -321,7 +347,8 @@
 
   /* ---------------- boot ---------------- */
   window.addEventListener("load", () => {
-    go(0);
+    const mm = (location.hash || "").match(/slide=(\d+)/);
+    go(mm ? Math.max(0, Math.min(total - 1, +mm[1] - 1)) : 0);
   });
   window.__deck = { go, next, prev };
 })();
