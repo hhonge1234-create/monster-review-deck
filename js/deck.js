@@ -4,6 +4,8 @@
   const S = window.REVIEW_STATS || {};
   const slides = Array.from(document.querySelectorAll(".slide"));
   const total = slides.length;
+  const STATIC = /[#&?]static/.test(location.hash);
+  if (STATIC) document.body.classList.add("static");
   let cur = 0;
   let busy = false;
   const charts = {};
@@ -116,7 +118,9 @@
   /* ---------------- helpers ---------------- */
   const A = window.anime;
   function reveal(el, opts) {
-    if (!el || !A) return;
+    if (!el) return;
+    if (STATIC) { el.forEach((x) => { x.style.opacity = 1; x.style.transform = "none"; }); return; }
+    if (!A) return;
     A({
       targets: el,
       opacity: [0, 1],
@@ -127,9 +131,11 @@
     });
   }
   function countUp(el, to, opts) {
-    if (!el || !A) return;
+    if (!el) return;
     const dec = (opts && opts.dec) || 0;
     const suffix = el.dataset.suffix || "";
+    if (STATIC) { el.textContent = (dec ? Number(to).toFixed(dec) : Math.round(to).toLocaleString()) + suffix; return; }
+    if (!A) return;
     const o = { v: 0 };
     el.textContent = "0" + suffix;
     A({ targets: o, v: to, round: dec ? null : 1, duration: 1500, easing: "easeOutExpo",
@@ -145,20 +151,24 @@
     if (!el) return null;
     if (charts[id]) { charts[id].destroy(); }
     cfg.options = cfg.options || {};
-    cfg.options.animation = { duration: 1400, easing: "easeOutQuart" };
+    cfg.options.animation = STATIC ? false : { duration: 1400, easing: "easeOutQuart" };
     cfg.options.color = TICK;
     charts[id] = new Chart(el.getContext("2d"), cfg);
     return charts[id];
   }
 
   function initKeywords() {
-    const words = (S.topWords || []).slice(0, 14);
+    const words = [
+      ["괴물", 146], ["나·내가", 62], ["모든·모두", 34], ["요리·미나토", 33],
+      ["누가", 31], ["보고·보는", 24], ["마음", 23], ["사랑", 23],
+      ["다시 태어나다", 18], ["아이들", 14], ["좋아하는", 12], ["고레에다", 11], ["행복", 10]
+    ];
     chart("cKeywords", {
       type: "bar",
       data: {
         labels: words.map((w) => w[0]),
         datasets: [{ data: words.map((w) => w[1]), backgroundColor: words.map((_, i) =>
-          `hsla(${96 - i * 3},58%,${64 - i * 1.2}%,0.9)`), borderRadius: 6, barPercentage: 0.72 }]
+          i === 0 ? "#f4cf6b" : i < 3 ? "#9ad46f" : "rgba(94,161,83,0.6)"), borderRadius: 6, barPercentage: 0.72 }]
       },
       options: {
         indexAxis: "y", responsive: true, maintainAspectRatio: false,
@@ -172,26 +182,21 @@
   }
 
   function initThemes() {
-    const th = (S.themes || []).slice(0, 8);
+    const th = (S.themes || []);
     const labels = th.map((t) => t.name);
     const vals = th.map((t) => t.count);
-    const pal = ["#f4cf6b", "#ffe3a8", "#9ad46f", "#5ea153", "#4f8f6a", "#c9a24a", "#8fc06a", "#e0b968"];
-    chart("cThemes", {
-      type: "doughnut",
-      data: { labels, datasets: [{ data: vals, backgroundColor: pal, borderColor: "#12241a", borderWidth: 3 }] },
-      options: {
-        cutout: "62%", responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { position: "right", labels: { color: "#eef7e8", boxWidth: 15, padding: 16, font: { size: 15, weight: "600" } } } }
-      }
-    });
     const max = Math.max.apply(null, vals);
-    chart("cRadar", {
-      type: "radar",
-      data: { labels, datasets: [{ data: vals, borderColor: "#9ad46f", backgroundColor: "rgba(154,212,111,0.22)", pointBackgroundColor: "#f4cf6b", borderWidth: 2 }] },
+    const pal = th.map((t, i) => i === 0 ? "#f4cf6b" : i < 3 ? "#9ad46f" : "rgba(94,161,83,0.55)");
+    chart("cThemes", {
+      type: "bar",
+      data: { labels, datasets: [{ data: vals, backgroundColor: pal, borderRadius: 7, barPercentage: 0.7 }] },
       options: {
-        responsive: true, maintainAspectRatio: false,
-        plugins: { legend: { display: false } },
-        scales: { r: { suggestedMin: 0, suggestedMax: Math.ceil(max * 1.15), grid: { color: GRID }, angleLines: { color: GRID }, pointLabels: { color: "#eef7e8", font: { size: 15, weight: "600" } }, ticks: { display: false } } }
+        indexAxis: "y", responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x + "건" } } },
+        scales: {
+          x: { grid: { color: GRID }, ticks: { color: TICK, font: { size: 13 } }, suggestedMax: max * 1.12 },
+          y: { grid: { display: false }, ticks: { color: "#eef7e8", font: { size: 15, weight: "600" } } }
+        }
       }
     });
   }
@@ -220,13 +225,21 @@
   }
 
   function initPrejudice() {
+    const labels = ["오해", "선입견·단정", "편견", "판단·비난", "이해의 오만"];
+    const vals = [26, 14, 10, 9, 8];
     chart("cPrejudice", {
-      type: "polarArea",
-      data: { labels: ["오해", "편견", "선입견·단정", "판단·비난", "이해의 오만"],
-        datasets: [{ data: [26, 10, 14, 9, 8], backgroundColor: ["#9ad46f", "#f4cf6b", "#4f9a5e", "#2f7d55", "#d19a3a"], borderColor: "#08110b", borderWidth: 3 }] },
-      options: { responsive: true, maintainAspectRatio: false, layout: { padding: 4 },
-        plugins: { legend: { position: "bottom", labels: { color: "#ffffff", boxWidth: 16, padding: 16, font: { size: 16, weight: "700" } } } },
-        scales: { r: { grid: { color: GRID }, ticks: { display: false }, angleLines: { color: GRID } } } }
+      type: "bar",
+      data: { labels, datasets: [{ data: vals,
+        backgroundColor: ["#9ad46f", "#7cc45f", "#f4cf6b", "#d8a23f", "#b98a35"],
+        borderRadius: 8, barPercentage: 0.66 }] },
+      options: {
+        indexAxis: "y", responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: (c) => c.parsed.x + "건" } } },
+        scales: {
+          x: { grid: { color: GRID }, ticks: { color: TICK, font: { size: 13 } }, suggestedMax: 30 },
+          y: { grid: { display: false }, ticks: { color: "#eef7e8", font: { size: 15, weight: "700" } } }
+        }
+      }
     });
   }
 
@@ -252,7 +265,7 @@
       bars.push({ el: r, h });
     }
     if (A) {
-      A({ targets: bars.map((b) => b.el), scaleY: [0.05, 1], opacity: [0.2, 0.9], transformOrigin: "center",
+      if (!STATIC) A({ targets: bars.map((b) => b.el), scaleY: [0.05, 1], opacity: [0.2, 0.9], transformOrigin: "center",
         duration: 900, delay: A.stagger(14), easing: "easeOutQuart" });
       let t = 0;
       setInterval(() => {
@@ -274,46 +287,45 @@
     const first = !entered.has(n);
 
     // generic reveals
-    reveal(s.querySelectorAll(".kicker, h1, h2, .lead, .quote, .quote-src, .footer-note, .scroll-hint"),
+    reveal(s.querySelectorAll(".kicker, h1, h2, .thesis, .lead, .quote, .quote-src, .footer-note, .source-line, .scroll-hint, .pull, .pull-center, .title-line, .mini-title, .read-note"),
       { stagger: 90, d: 700, y: 24 });
     reveal(s.querySelectorAll(".chip"), { stagger: 60, d: 600 });
-    reveal(s.querySelectorAll(".stat-card, .pipe-node, .panel3, .crit .c, .quotelist .q"),
+    reveal(s.querySelectorAll(".stat-card, .pipe-node, .panel3, .crit .c, .crit-list .row, .crit-hero, .tc, .stage-row, .bigram, .conclusion-points .cp, .quotelist .q, .bigline"),
       { stagger: 90, d: 700 });
 
     if (window.setGlow) {
-      window.setGlow(name === "title" ? 0.55 : (name === "sun" || name === "conclusion") ? 1.0 : name === "sound" ? 0.6 : 0.72);
+      window.setGlow(name === "title" ? 0.55 : (name === "ending" || name === "conclusion") ? 1.0 : name === "sound" ? 0.6 : 0.72);
     }
 
     if (name === "title") {
       const chars = s.querySelectorAll(".film-title .ch");
-      if (A) A({ targets: chars, opacity: [0, 1], translateY: [90, 0], rotate: [8, 0],
+      if (STATIC) { chars.forEach((c) => { c.style.opacity = 1; c.style.transform = "none"; }); }
+      else if (A) A({ targets: chars, opacity: [0, 1], translateY: [90, 0], rotate: [8, 0],
         duration: 1000, delay: A.stagger(90, { start: 200 }), easing: "easeOutExpo" });
     }
 
-    if (name === "overview" && first) {
+    if (name === "summary") {
       s.querySelectorAll(".num[data-to]").forEach((el) => {
         countUp(el, parseFloat(el.dataset.to), { dec: parseInt(el.dataset.dec || "0", 10) });
       });
-    } else if (name === "overview") {
-      s.querySelectorAll(".num[data-to]").forEach((el) => countUp(el, parseFloat(el.dataset.to), { dec: parseInt(el.dataset.dec || "0", 10) }));
     }
 
     if (name === "keywords") initKeywords();
-    if (name === "themes") { initThemes(); initLength(); }
+    if (name === "themes") initThemes();
     if (name === "prejudice") initPrejudice();
-    if (name === "sentiment") initSentiment();
     if (name === "sound") initWave();
 
     if (name === "viewpoint") {
       const p = s.querySelectorAll(".panel3");
-      if (A) A({ targets: p, opacity: [0, 1], translateX: (el, i) => [120 - i * 40, 0], rotateY: [18, 0],
+      if (STATIC) p.forEach((x) => { x.style.opacity = 1; x.style.transform = "none"; });
+      else if (A) A({ targets: p, opacity: [0, 1], translateX: (el, i) => [120 - i * 40, 0], rotateY: [18, 0],
         duration: 900, delay: A.stagger(160), easing: "easeOutCubic" });
     }
 
-    if (name === "sun") {
-      // de-rain handled by setStorm; animate the big line
+    if (name === "ending") {
       const hl = s.querySelector(".bigline");
-      if (hl && A) A({ targets: hl, opacity: [0, 1], scale: [0.96, 1], duration: 1200, easing: "easeOutExpo" });
+      if (STATIC && hl) { hl.style.opacity = 1; hl.style.transform = "none"; }
+      else if (hl && A) A({ targets: hl, opacity: [0, 1], scale: [0.96, 1], duration: 1200, easing: "easeOutExpo" });
     }
 
     entered.add(n);
@@ -321,7 +333,8 @@
 
   /* ---------------- boot ---------------- */
   window.addEventListener("load", () => {
-    go(0);
+    const mm = (location.hash || "").match(/slide=(\d+)/);
+    go(mm ? Math.max(0, Math.min(total - 1, +mm[1] - 1)) : 0);
   });
   window.__deck = { go, next, prev };
 })();
