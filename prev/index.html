@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>《괴물》 왓챠 리뷰 분석 — 관람평 인사이트</title>
+<meta name="description" content="고레에다 히로카즈 《괴물》 왓챠 관객 리뷰 477건으로 읽은 작품 전반 관람평 인사이트" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2312241a'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='%23f4cf6b' font-family='sans-serif'%3E%E6%80%AA%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;600;800&family=Noto+Serif+KR:wght@600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="deck.css" />
+</head>
+<body>
+<canvas id="rain"></canvas>
+<div class="deck" id="deck">
+
+  <!-- 1. TITLE -->
+  <section class="slide bg-full title-slide" data-name="title"
+    style="background-image:url('../assets/film/train.jpg')">
+    <div class="kicker">Watcha Review Analysis · 2023</div>
+    <h1 class="film-title serif"><span class="ch">괴</span><span class="ch">물</span></h1>
+    <div class="en">Monster · Kore-eda Hirokazu</div>
+    <p class="title-line">관객 리뷰 <b>477건</b>이 말하는 《괴물》 — 무엇에 집중했고, 왜 위로받았나</p>
+    <div class="title-meta">
+      <span class="chip">왓챠 리뷰 477건</span>
+      <span class="chip">평균 ★ 4.2</span>
+      <span class="chip">4점 이상 77.7%</span>
+    </div>
+    <img class="poster" src="../assets/film/poster.png" alt="《괴물》 공식 포스터" />
+    <div class="scroll-hint"><span class="dot"></span>→ / SPACE 로 이동</div>
+  </section>
+
+  <!-- 2. SUMMARY -->
+  <section class="slide" data-name="summary"
+    style="background-image:url('../assets/img/moss.jpg')">
+    <div class="kicker">Executive Summary</div>
+    <h2 class="thesis">관객은 괴물을 찾으러 갔다가<br /><span class="accent">나를 발견하고 위로받았다</span></h2>
+    <div class="stat-row">
+      <div class="stat-card"><div class="num accent" data-to="4.2" data-dec="1" data-suffix=" / 5">0</div><div class="label">왓챠 평균 별점</div></div>
+      <div class="stat-card"><div class="num accent" data-to="77.7" data-dec="1" data-suffix="%">0</div><div class="label">4점 이상 평가 비율</div></div>
+      <div class="stat-card"><div class="num accent-rain" data-to="477">0</div><div class="label">수집한 리뷰</div></div>
+      <div class="stat-card"><div class="num" data-to="49531">0</div><div class="label">보고싶어요</div></div>
+    </div>
+    <p class="source-line">왓챠 관객 리뷰 477건 · Firecrawl 수집 · 2026.10</p>
+  </section>
+
+  <!-- 3. KEYWORDS -->
+  <section class="slide" data-name="keywords"
+    style="background-image:url('../assets/img/meadow.jpg')">
+    <div class="kicker">Keyword Frequency</div>
+    <h2>가장 많이 나온 단어는 ‘괴물’, 그다음은 ‘나’</h2>
+    <div class="cols tight" style="align-items:stretch">
+      <div class="chart-card"><div class="chart-wrap tall"><canvas id="cKeywords"></canvas></div></div>
+      <div class="side">
+        <p class="lead">‘괴물’ <b class="accent">146건(30.6%)</b>, ‘나’ <b class="accent">62건</b>.
+        관객은 괴물을 찾는 영화가 아니라 <b>‘내가 괴물이었는지’</b>를 묻는 영화로 소비한다.</p>
+        <div class="mini-title">자주 인용된 표현</div>
+        <div class="bigrams">
+          <span class="bigram">누가 괴물인가 <b>12</b></span>
+          <span class="bigram">몇몇 사람만 가질 수 있는 건 행복이라 부르지 않아</span>
+          <span class="bigram">다시 태어나지 않아도 괜찮아</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. QUESTION -->
+  <section class="slide" data-name="question"
+    style="background-image:url('../assets/img/canopy.jpg')">
+    <div class="kicker">Core Question</div>
+    <h2>“괴물은 누구인가?” — 질문은 관객에게 되돌아온다</h2>
+    <div class="cols tight" style="align-items:center">
+      <div class="frame"><img src="../assets/charts/wordcloud.png" alt="리뷰 워드클라우드" /></div>
+      <div>
+        <div class="quotelist">
+          <div class="q">“괴물을 찾다가 <b>내가 괴물이었구나</b> 하는 결말.”<div class="who">토맛토마토</div></div>
+          <div class="q">“누가 괴물인지 찾고 있던 <b>나를 보고 충격</b>에 빠졌다.”<div class="who">진종원</div></div>
+        </div>
+        <p class="read-note">관객은 ‘괴물’을 작품 속 실체가 아니라 <b>타자화의 결과</b>로 읽는다.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. THEMES -->
+  <section class="slide" data-name="themes"
+    style="background-image:url('../assets/img/forest.jpg')">
+    <div class="kicker">Theme Map</div>
+    <h2>리뷰가 향한 곳 — 결말·위로와 괴물의 정체</h2>
+    <div class="chart-wrap tall"><canvas id="cThemes"></canvas></div>
+    <p class="footer-note">테마별 관련 키워드 포함 리뷰 수(중복 포함) · 결말·위로 63 · 괴물 정체성 50 · 오해·편견 39</p>
+  </section>
+
+  <!-- 6. VIEWPOINT -->
+  <section class="slide" data-name="viewpoint"
+    style="background-image:url('../assets/img/moss.jpg')">
+    <div class="kicker">Theme 01 · Structure</div>
+    <h2>같은 사건을 세 번 — 판단은 스스로 무너진다</h2>
+    <p class="lead">엄마 → 담임 → 아이들. 시점이 바뀔 때마다 앞선 판단이 반성된다.</p>
+    <div class="panels">
+      <div class="panel3 p1"><div class="tag">Part 1</div><div class="big">엄마 · 사오리</div><p class="lead">아들의 변화를 보고 담임을 의심하고, 학교를 불신한다.</p></div>
+      <div class="panel3 p2"><div class="tag">Part 2</div><div class="big">담임 · 호리</div><p class="lead">무책임해 보였던 행동에 알지 못했던 맥락이 드러난다.</p></div>
+      <div class="panel3 p3"><div class="tag">Part 3</div><div class="big">아이들 · 미나토·요리</div><p class="lead">어른들이 결코 닿지 못한 진실 — 눈부신 햇살 속에서.</p></div>
+    </div>
+    <p class="pull">“시점 바뀔 때마다 <span class="hl">머리 한 대씩 맞는 느낌</span>이었다.” <span class="pull-who">— Yem</span></p>
+  </section>
+
+  <!-- 7. PREJUDICE -->
+  <section class="slide" data-name="prejudice"
+    style="background-image:url('../assets/img/canopy.jpg')">
+    <div class="kicker">Theme 02 · Gaze</div>
+    <h2>‘이해’조차 폭력이 될 수 있다</h2>
+    <p class="lead">리뷰에서 편견은 <b>오해 26</b> · 선입견 14 · 편견 10 · 판단 9 · ‘이해의 오만’ 8로 나타난다.</p>
+    <div class="cols tight" style="align-items:stretch">
+      <div class="chart-card"><div class="chart-wrap"><canvas id="cPrejudice"></canvas></div></div>
+      <div class="quotelist">
+        <div class="q">“오해의 오해의 오해… <b>이 영화는 괴물이 없다.</b>”<div class="who">김규민</div></div>
+        <div class="q">“나 역시 편견으로 <b>누군가에게 괴물이 되어버린 적</b>이 있지 않을까.”</div>
+        <div class="q">부모의 걱정 · 학교의 회피 · 선생의 침묵 — 모두 <b>선의에서 비롯된 폭력</b>.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. ENDING -->
+  <section class="slide bg-full conclusion" data-name="ending"
+    style="background-image:url('../assets/img/sunforest.jpg')">
+    <div class="kicker">Theme 03 · Ending</div>
+    <div class="bigline serif">“다시 태어나지 않아도<br />괜찮아.”</div>
+    <p class="pull-center">“태풍이 불어서 다행이라고 생각했다. 그리고 다시 태어나지 않아도 괜찮다고 생각했다.”
+      <span class="pull-who">— from.serein</span></p>
+    <p class="source-line">관련 리뷰 68건(14%) · 결말은 비극적이면서도 구원적이다</p>
+  </section>
+
+  <!-- 9. SOUND -->
+  <section class="slide" data-name="sound"
+    style="background-image:url('../assets/img/water.jpg')">
+    <div class="kicker">Theme 04 · Sound &amp; Image</div>
+    <h2>《Aqua》가 눈물의 방아쇠를 당긴다</h2>
+    <div class="cols tight" style="align-items:center">
+      <div>
+        <p class="lead">사카모토 류이치의 엔딩 곡. 감독 · 각본 · 음악의 협업이 정서적 절정을 만든다.</p>
+        <div class="quotelist" style="margin-top:2vh">
+          <div class="q">“<b>아쿠아만 나왔다 하면 파블로프의 개마냥 눈물이.</b>”<div class="who">다 영</div></div>
+          <div class="q">“사카모토 유지의 비틀린 시선 · 고레에다의 담담함 · <b>류이치 사카모토의 쓸쓸함</b>.”</div>
+        </div>
+      </div>
+      <svg id="wave" class="wave" viewBox="0 0 900 220" preserveAspectRatio="none"></svg>
+    </div>
+    <p class="footer-note">음악 관련 17건 + 관련 언급 18건 · 3부의 밝은 색조 전환도 호평</p>
+  </section>
+
+  <!-- 10. MORE THEMES -->
+  <section class="slide" data-name="more"
+    style="background-image:url('../assets/img/meadow.jpg')">
+    <div class="kicker">Theme 05–07</div>
+    <h2>연기 · 사랑 · 학교 — 다른 주제, 같은 결론</h2>
+    <div class="theme-cards">
+      <div class="tc">
+        <div class="tc-tag">연기</div>
+        <div class="tc-t">소야 · 히나타</div>
+        <p>“<b>소야랑 히나타 둘 다</b> 거기서는 행복해졌길.”<span class="who"> — 지후</span></p>
+        <div class="tc-stat">배우·연기 7건 + 인물 언급 다수</div>
+      </div>
+      <div class="tc">
+        <div class="tc-tag">사랑</div>
+        <div class="tc-t">보편적 사랑과 퀴어 서사</div>
+        <p>“표현은 달라도 <b>모두 다 사랑하는 마음</b>이었기에.”</p>
+        <div class="tc-stat">‘사랑’ 23건 · 퀴어 4건</div>
+      </div>
+      <div class="tc">
+        <div class="tc-tag">학교</div>
+        <div class="tc-t">조직적 회피와 무책임</div>
+        <p>“<b>폭력에 대한 학교의 무감각한 태도</b>… 숨이 막혔다.”</p>
+        <div class="tc-stat">학교·폭력 23건</div>
+      </div>
+    </div>
+    <p class="read-note center">세 주제 모두 “괴물은 우리가 만든 시선”이라는 결론으로 수렴한다.</p>
+  </section>
+
+  <!-- 11. EMOTION -->
+  <section class="slide" data-name="emotion"
+    style="background-image:url('../assets/img/water.jpg')">
+    <div class="kicker">Emotional Arc</div>
+    <h2>슬픔에서 성찰로, 성찰에서 위로로</h2>
+    <div class="cols tight" style="align-items:center">
+      <div class="arc">
+        <div class="arc-step">
+          <div class="arc-n">24</div>
+          <div class="arc-nm">슬픔 · 눈물</div>
+          <div class="arc-bar"><span style="width:36%"></span></div>
+        </div>
+        <div class="arc-arrow">→</div>
+        <div class="arc-step">
+          <div class="arc-n">66</div>
+          <div class="arc-nm">성찰 · 오해</div>
+          <div class="arc-bar"><span style="width:100%"></span></div>
+        </div>
+        <div class="arc-arrow">→</div>
+        <div class="arc-step">
+          <div class="arc-n">45</div>
+          <div class="arc-nm">위로 · 행복</div>
+          <div class="arc-bar"><span style="width:68%"></span></div>
+        </div>
+      </div>
+      <div class="stage-list">
+        <div class="stage-row"><span class="t">눈물 · 울음</span><span class="v">38건 · 7%</span></div>
+        <div class="stage-row"><span class="t">여운</span><span class="v">5건+</span></div>
+        <div class="stage-row"><span class="t">위로 · 구원</span><span class="v">다수</span></div>
+        <div class="stage-row"><span class="t">자기 성찰</span><span class="v">다수</span></div>
+        <div class="stage-row"><span class="t">혼란 · 전복</span><span class="v">다수</span></div>
+      </div>
+    </div>
+    <p class="footer-note">단순한 비극적 카타르시스가 아니라 ‘자기 인식의 재구성’으로 수렴한다.</p>
+  </section>
+
+  <!-- 12. CRITIQUE -->
+  <section class="slide" data-name="critique"
+    style="background-image:url('../assets/img/sunforest.jpg')">
+    <div class="kicker">Minority View</div>
+    <h2>22%는 템포와 장르 혼합에서 멈췄다</h2>
+    <div class="cols tight" style="align-items:stretch">
+      <div class="crit-hero">
+        <div class="big-num">22<span>%</span></div>
+        <p class="lead">4점 미만의 유보적 평가. 작품 완성도보다
+        <b>초반 템포 · 장르 혼합의 낯섦</b>에 집중된다.</p>
+      </div>
+      <div class="crit-list">
+        <div class="row"><div class="h">취향 불일치</div><div class="b">“작품성과는 별개로 제 취향과는 머네요.”</div></div>
+        <div class="row"><div class="h">초반 템포</div><div class="b">“중반까지 화병 나서 끌 뻔했다. 끝까지 보니 명작이란 걸 알았다.”</div></div>
+        <div class="row"><div class="h">작위성</div><div class="b">“담임 파트에서는 《더 헌트》와 같은 작위성이 느껴졌다.”</div></div>
+        <div class="row"><div class="h">장르 결합의 낯섦</div><div class="b">“부조리극과 리얼리즘이 어색하게 결합되고 있다고 느꼈다.”</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13. CONCLUSION -->
+  <section class="slide bg-full conclusion" data-name="conclusion"
+    style="background-image:url('../assets/film/train.jpg')">
+    <div class="kicker">Conclusion</div>
+    <div class="bigline">괴물은 타인이 아니라<br /><span class="accent">우리가 만들어내는 시선</span>이다.</div>
+    <div class="conclusion-points">
+      <div class="cp"><span>01</span>구조가 곧 주제 — 진실은 하나가 아니다</div>
+      <div class="cp"><span>02</span>관객을 심판대에 세우는 영화</div>
+      <div class="cp"><span>03</span>비극이 아닌 ‘위로의 영화’</div>
+      <div class="cp"><span>04</span>고레에다 · 사카모토 유지 · 류이치의 협업</div>
+    </div>
+    <p class="source-line">리뷰의 30% 이상이 ‘괴물’과 ‘나’를 연결한다</p>
+  </section>
+
+</div>
+
+<div class="navbtns">
+  <button data-nav="prev" aria-label="이전">‹</button>
+  <button data-nav="next" aria-label="다음">›</button>
+</div>
+<div class="hud">
+  <span class="dots"></span>
+  <span class="counter">01 / 13</span>
+</div>
+<div class="progress"></div>
+
+<script src="../js/vendor/anime.min.js"></script>
+<script src="../js/vendor/chart.umd.min.js"></script>
+<script src="../data/review_stats.js"></script>
+<script src="deck.js"></script>
+</body>
+</html>
